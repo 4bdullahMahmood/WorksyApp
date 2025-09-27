@@ -1,2 +1,2 @@
-# WorksyProjectCSUS
+# WorksyApp
 A platform connecting consumers with tradesmen, contractors, and handymen.
