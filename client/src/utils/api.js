@@ -21,9 +21,19 @@ export const api = {
 
   // Services API
   services: {
-    getAll: (filters = {}) => {
-      const params = new URLSearchParams(filters);
-      return fetch(`${API_BASE_URL}/services?${params}`).then(res => res.json());
+    getAll: async (filters = {}) => {
+      try {
+        const params = new URLSearchParams(filters);
+        const response = await fetch(`${API_BASE_URL}/services?${params}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return Array.isArray(data) ? data : [];
+      } catch (error) {
+        console.error('Error fetching services:', error);
+        return [];
+      }
     },
     get: (id) => fetch(`${API_BASE_URL}/services/${id}`).then(res => res.json()),
     create: (serviceData) => fetch(`${API_BASE_URL}/services`, {

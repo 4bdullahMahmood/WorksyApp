@@ -5,6 +5,81 @@ import { collection, doc, getDocs, getDoc, addDoc, updateDoc, deleteDoc, query, 
 // GET /api/services - Get all services with optional filters
 export async function GET(request) {
   try {
+    // Check if Firebase is available
+    if (!db) {
+    // Return mock data when Firebase is not configured
+    const mockServices = [
+      {
+        id: '1',
+        title: 'Professional Plumbing Services',
+        description: 'Expert plumbing solutions for your home and business',
+        category: 'plumbing',
+        price: 75,
+        rating: 4.8,
+        providerName: 'John\'s Plumbing',
+        location: 'New York, NY',
+        imageUrl: '/api/placeholder/300/200'
+      },
+      {
+        id: '2',
+        title: 'Electrical Installation & Repair',
+        description: 'Licensed electrician for all your electrical needs',
+        category: 'electrical',
+        price: 95,
+        rating: 4.9,
+        providerName: 'Spark Electric',
+        location: 'Los Angeles, CA',
+        imageUrl: '/api/placeholder/300/200'
+      },
+      {
+        id: '3',
+        title: 'HVAC Maintenance & Repair',
+        description: 'Complete heating and cooling system services',
+        category: 'hvac',
+        price: 120,
+        rating: 4.7,
+        providerName: 'Climate Control Pro',
+        location: 'Chicago, IL',
+        imageUrl: '/api/placeholder/300/200'
+      },
+      {
+        id: '4',
+        title: 'Professional House Cleaning',
+        description: 'Thorough cleaning services for your home',
+        category: 'cleaning',
+        price: 50,
+        rating: 4.6,
+        providerName: 'Clean & Shine',
+        location: 'Miami, FL',
+        imageUrl: '/api/placeholder/300/200'
+      },
+      {
+        id: '5',
+        title: 'Interior & Exterior Painting',
+        description: 'High-quality painting services for any surface',
+        category: 'painting',
+        price: 85,
+        rating: 4.8,
+        providerName: 'Color Perfect Painters',
+        location: 'Seattle, WA',
+        imageUrl: '/api/placeholder/300/200'
+      },
+      {
+        id: '6',
+        title: 'Flooring Installation & Repair',
+        description: 'Expert flooring solutions for all types',
+        category: 'flooring',
+        price: 150,
+        rating: 4.9,
+        providerName: 'Floor Masters',
+        location: 'Austin, TX',
+        imageUrl: '/api/placeholder/300/200'
+      }
+    ];
+    
+    return NextResponse.json(mockServices);
+  }
+
     const { searchParams } = new URL(request.url);
     const category = searchParams.get('category');
     const location = searchParams.get('location');

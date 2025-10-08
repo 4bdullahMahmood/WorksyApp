@@ -20,9 +20,12 @@ export default function Home() {
   const loadFeaturedServices = async () => {
     try {
       const services = await api.services.getAll({ limit: 6 });
-      setFeaturedServices(services);
+      // Ensure services is always an array
+      setFeaturedServices(Array.isArray(services) ? services : []);
     } catch (error) {
       console.error('Error loading featured services:', error);
+      // Set empty array on error
+      setFeaturedServices([]);
     } finally {
       setLoading(false);
     }
@@ -176,9 +179,22 @@ export default function Home() {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {featuredServices.map((service) => (
-                <ServiceCard key={service.id} service={service} />
-              ))}
+              {Array.isArray(featuredServices) && featuredServices.length > 0 ? (
+                featuredServices.map((service) => (
+                  <ServiceCard key={service.id} service={service} />
+                ))
+              ) : (
+                <div className="col-span-full text-center py-8">
+                  <p className="text-gray-500">No featured services available at the moment.</p>
+                  <Link 
+                    href="/search" 
+                    className="inline-flex items-center mt-4 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                  >
+                    Browse All Services
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Link>
+                </div>
+              )}
             </div>
           )}
           
